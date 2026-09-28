@@ -5,7 +5,11 @@ from grader_contracts.python_basics import PositiveIntegerInput, TextInput, Vect
 
 def count_vowels(data: TextInput) -> int:
     text = data.value.lower()
-    return sum(1 for char in text if char in 'aeiou')
+    count_vowels = 0
+    for i in text:
+        if i in 'aeiou':
+            count_vowels += 1
+    return count_vowels
 
 
 def has_unique_characters(data: TextInput) -> bool:
@@ -15,7 +19,7 @@ def has_unique_characters(data: TextInput) -> bool:
 
 def count_one_bits(data: PositiveIntegerInput) -> int:
     number = data.value
-    return bin(number).count('1')
+    return bin(number)[2:].count('1')
 
 
 def multiplicative_persistence(data: PositiveIntegerInput) -> int:
@@ -34,13 +38,18 @@ def multiplicative_persistence(data: PositiveIntegerInput) -> int:
 def mse(data: VectorPairInput) -> float:
     predicted, expected = data.predicted, data.expected
     n = len(predicted)
-    return sum((p - e) ** 2 for p, e in zip(predicted, expected)) // n
+    total_error = 0.0
+    for i in range(n):
+        diff = predicted[i] - expected[i]
+        total_error = total_error + (diff ** 2)
+    return total_error / n
 
 
 def prime_factorization(data: PositiveIntegerInput) -> str:
     number = data.value
-    factors = []
+    factors = ''
     d = 2
+
     while d ** 2 <= number:
         if number % d == 0:
             power = 0
@@ -48,13 +57,13 @@ def prime_factorization(data: PositiveIntegerInput) -> str:
                 power += 1
                 number //= d
             if power == 1:
-                factors.append(f'({d})')
+                factors += '(' +str(d) + ')'
             else:
-                factors.append(f'({d}**{power})')
+                factors += '(' +str(d) + ')'
         d += 1
     if number > 1:
-        factors.append(f'({number})')
-    return ''.join(factors)
+        factors += number
+    return factors
 
 
 def pyramid(data: PositiveIntegerInput) -> int | str:
