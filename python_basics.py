@@ -56,13 +56,14 @@ def prime_factorization(data: PositiveIntegerInput) -> str:
             while number % d == 0:
                 power += 1
                 number //= d
+
             if power == 1:
                 factors += '(' +str(d) + ')'
             else:
-                factors += '(' +str(d) + ')'
+                factors += '(' +str(d) + '**' + str(power) + ')'
         d += 1
     if number > 1:
-        factors += number
+        factors += '(' + str(number) + ')'
     return factors
 
 
