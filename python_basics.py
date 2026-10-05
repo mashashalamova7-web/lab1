@@ -86,4 +86,7 @@ def is_balanced_number(data: PositiveIntegerInput) -> bool:
     if n % 2 == 0:
         left = sum(digits[:mid - 1])
         right = sum(digits[mid + 1:])
+    else:
+        left = sum(digits[:mid])
+        right = sum(digits[mid + 1:])
     return left == right
