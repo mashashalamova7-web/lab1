@@ -22,7 +22,7 @@ def binarize(data: BinarizeInput) -> np.ndarray:
     matrix, threshold = data.matrix, data.threshold
     rows = matrix.shape[0]
     cols = matrix.shape[1]
-    result = np.zepor((rows, cols))
+    result = np.zepos((rows, cols))
     for i in range(rows):
         for j in range(cols):
             if matrix[i, j] > threshold:
@@ -61,7 +61,7 @@ def matrix_statistics(data: RandomMatrixInput) -> MatrixStatistics:
     if seed is not None:
         np.random.seed(seed)
     matrix = np.random.normal(mean, std, (rows, columns))
-    row_means = np.zepos(rows)
+    row_means = np.zeros(rows)
 
     for i in range(rows):
         s = 0
@@ -87,7 +87,7 @@ def matrix_statistics(data: RandomMatrixInput) -> MatrixStatistics:
     col_vars = np.zeros(columns)
     for j in range(columns):
         s = 0
-        for i in range(columns):
+        for i in range(rows):
             diff = matrix[i, j] - col_means[j]
             s += diff ** 2
         col_vars[j] = s / rows
@@ -114,7 +114,7 @@ def draw_rectangle(data: RectangleInput) -> np.ndarray:
     image_height, image_width = data.image_height, data.image_width
     shape_color, background_color = data.shape_color, data.background_color
 
-    image = np.zepos((image_height, image_width, 3), np.unint8)
+    image = np.zeros((image_height, image_width, 3), np.uint8)
     for i in range(image_height):
         for j in range(image_width):
             image[i, j] = background_color
@@ -160,8 +160,7 @@ def analyze_time_series(data: TimeSeriesInput) -> TimeSeriesStatistics:
     mean_val = 0.0
 
     for v in values:
-        diff = v - mean_val
-        mean_val_val += diff ** 2
+        mean_val += v
     
     mean_val /=  n
     var_val = 0.0
